@@ -149,9 +149,11 @@ public class ScreenCaptureService extends Service {
         if (bitmap == null) return;
 
         // 先画模拟检测框，验证悬浮层能否盖住原厂摄像头界面。
+        final float currentFps = fps;
+        final long frameTimeMs = now;
         overlayView.post(() -> {
-            overlayView.setCaptureInfo(captureWidth, captureHeight, screenWidth, screenHeight, fps);
-            overlayView.setDemoBoxes(now);
+            overlayView.setCaptureInfo(captureWidth, captureHeight, screenWidth, screenHeight, currentFps);
+            overlayView.setDemoBoxes(frameTimeMs);
         });
 
         // 每秒保存一张截图，验证录屏是否真的抓到了前置影像。
